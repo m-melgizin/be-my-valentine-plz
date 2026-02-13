@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💕 Математическая Валентинка 💕</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a0a0a 0%, #2d0f0f 25%, #1a0a0a 50%, #2d0f0f 75%, #1a0a0a 100%);
+            min-height: 100vh;
+            font-family: 'Cormorant Garamond', serif;
+            color: #f6cacc;
+            overflow-x: hidden;
+        }
+
+        /* Floating hearts background */
+        .hearts-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0.15;
+            animation: floatUp linear infinite;
+            color: #d02224;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.15;
+            }
+            90% {
+                opacity: 0.15;
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 1.5s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5em;
+            background: linear-gradient(135deg, #f6cacc, #e35053, #f6cacc);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s ease-in-out infinite;
+            margin-bottom: 10px;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { background-position: 0% center; }
+            50% { background-position: 200% center; }
+        }
+
+        .header p {
+            font-size: 1.3em;
+            font-style: italic;
+            color: #ec8385;
+            letter-spacing: 2px;
+        }
+
+        .divider {
+            width: 200px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #d02224, transparent);
+            margin: 20px auto;
+        }
+
+        /* Chart cards */
+        .chart-card {
+            background: linear-gradient(145deg, rgba(44, 15, 15, 0.9), rgba(26, 10, 10, 0.95));
+            border: 1px solid rgba(208, 34, 36, 0.3);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 45px;
+            box-shadow:
+                0 0 30px rgba(208, 34, 36, 0.1),
+                0 0 60px rgba(208, 34, 36, 0.05),
+                inset 0 1px 0 rgba(246, 202, 204, 0.1);
+            animation: fadeInUp 1s ease-out;
+            animation-fill-mode: both;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .chart-card:hover {
+            transform: translateY(-5px);
+            box-shadow:
+                0 0 40px rgba(208, 34, 36, 0.2),
+                0 0 80px rgba(208, 34, 36, 0.1),
+                inset 0 1px 0 rgba(246, 202, 204, 0.15);
+        }
+
+        .chart-card:nth-child(2) { animation-delay: 0.2s; }
+        .chart-card:nth-child(3) { animation-delay: 0.4s; }
+        .chart-card:nth-child(4) { animation-delay: 0.6s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chart-card h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2em;
+            color: #e35053;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .chart-card .subtitle {
+            text-align: center;
+            font-size: 1em;
+            color: #ec8385;
+            margin-bottom: 5px;
+            font-style: italic;
+            letter-spacing: 1px;
+        }
+
+        .chart-card .formula {
+            text-align: center;
+            font-size: 0.85em;
+            color: #f1a7a9;
+            margin-bottom: 25px;
+            font-family: 'Courier New', monospace;
+            background: rgba(156, 25, 27, 0.15);
+            padding: 10px 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(156, 25, 27, 0.2);
+            word-break: break-all;
+        }
+
+        .canvas-wrapper {
+            position: relative;
+            background: rgba(10, 5, 5, 0.5);
+            border-radius: 15px;
+            padding: 15px;
+            border: 1px solid rgba(208, 34, 36, 0.15);
+        }
+
+        canvas {
+            max-width: 100%;
+        }
+
+        /* Slider styling */
+        .slider-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .slider-container label {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.4em;
+            color: #e35053;
+        }
+
+        .slider-container input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 300px;
+            height: 6px;
+            border-radius: 3px;
+            background: linear-gradient(90deg, #9c191b, #d02224, #e35053, #f1a7a9);
+            outline: none;
+            cursor: pointer;
+        }
+
+        .slider-container input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #f6cacc, #d02224);
+            border: 2px solid #f6cacc;
+            box-shadow: 0 0 10px rgba(208, 34, 36, 0.5);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .slider-container input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .slider-container input[type="range"]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #f6cacc, #d02224);
+            border: 2px solid #f6cacc;
+            box-shadow: 0 0 10px rgba(208, 34, 36, 0.5);
+            cursor: pointer;
+        }
+
+        .slider-value {
+            font-size: 1.3em;
+            color: #f6cacc;
+            min-width: 60px;
+            text-align: center;
+            background: rgba(156, 25, 27, 0.2);
+            padding: 4px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(208, 34, 36, 0.3);
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 30px;
+            animation: fadeInUp 1s ease-out 0.8s both;
+        }
+
+        .footer .heart-big {
+            font-size: 3em;
+            animation: heartbeat 1.5s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            15% { transform: scale(1.15); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.1); }
+        }
+
+        .footer p {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8em;
+            color: #e35053;
+            margin-top: 10px;
+        }
+
+        /* Sparkle effect */
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #f6cacc;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: sparkle 1s ease-out forwards;
+        }
+
+        @keyframes sparkle {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(0);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .header h1 { font-size: 2.2em; }
+            .chart-card { padding: 20px; }
+            .chart-card h2 { font-size: 1.5em; }
+            .slider-container input[type="range"] { width: 200px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating hearts background -->
+    <div class="hearts-bg" id="heartsBg"></div>
+
+    <div class="container">
+        <div class="header">
+            <h1>💕 Математика Любви 💕</h1>
+            <div class="divider"></div>
+            <p>Когда формулы говорят о чувствах...</p>
+        </div>
+
+        <!-- Chart 1: Parametric Heart -->
+        <div class="chart-card">
+            <h2>💗 Сердце в параметрической форме</h2>
+            <p class="subtitle">Классическое сердце — красота симметрии</p>
+            <div class="formula">
+                x(t) = 16·sin³(t) &nbsp;|&nbsp; y(t) = 13·cos(t) − 5·cos(2t) − 2·cos(3t) − cos(4t) &nbsp;|&nbsp; t ∈ [0, 2π]
+            </div>
+            <div class="canvas-wrapper">
+                <canvas id="chart1"></canvas>
+            </div>
+        </div>
+
+        <!-- Chart 2: Implicit Heart with slider -->
+        <div class="chart-card">
+            <h2>💗 Сердечная волна</h2>
+            <p class="subtitle">Играй со слайдером — смотри, как бьётся сердце</p>
+            <div class="formula">
+                f(x) = x^(2/3) + 0.9·(3.3 − x²)^(1/2)·sin(a·π·x) &nbsp;|&nbsp; a ∈ [−10, 10]
+            </div>
+            <div class="slider-container">
+                <label for="sliderA">a =</label>
+                <input type="range" id="sliderA" min="-10" max="10" step="0.1" value="3">
+                <span class="slider-value" id="sliderValue">3.0</span>
+            </div>
+            <div class="canvas-wrapper">
+                <canvas id="chart2"></canvas>
+            </div>
+        </div>
+
+        <!-- Chart 3: Polar Heart -->
+        <div class="chart-card">
+            <h2>💗 Полярная роза любви</h2>
+            <p class="subtitle">Сердце в полярных координатах</p>
+            <div class="formula">
+                r(θ) = 3.6 − (cos(2θ) + 3·sin(θ)) / (0.8 + |cos(θ)|) + 1.5·cos(2θ) &nbsp;|&nbsp; θ ∈ [0, 2π]
+            </div>
+            <div class="canvas-wrapper">
+                <canvas id="chart3"></canvas>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="heart-big">💕</div>
+            <p>С любовью, написано формулами ∞</p>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        //  COLOR PALETTE
+        // ==========================================
+        const palette = [
+            "#9c191b", "#ac1c1e", "#bd1f21", "#d02224", "#dd2c2f",
+            "#e35053", "#e66063", "#ec8385", "#f1a7a9", "#f6cacc"
+        ];
+
+        // ==========================================
+        //  FLOATING HEARTS BACKGROUND
+        // ==========================================
+        function createFloatingHearts() {
+            const container = document.getElementById('heartsBg');
+            const hearts = ['♥', '♡', '❤', '💕', '❣'];
+            for (let i = 0; i < 25; i++) {
+                const heart = document.createElement('span');
+                heart.className = 'floating-heart';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.fontSize = (12 + Math.random() * 24) + 'px';
+                heart.style.animationDuration = (8 + Math.random() * 15) + 's';
+                heart.style.animationDelay = (Math.random() * 20) + 's';
+                heart.style.color = palette[Math.floor(Math.random() * palette.length)];
+                container.appendChild(heart);
+            }
+        }
+        createFloatingHearts();
+
+        // ==========================================
+        //  CHART.JS DEFAULTS
+        // ==========================================
+        Chart.defaults.color = '#f1a7a9';
+        Chart.defaults.borderColor = 'rgba(156, 25, 27, 0.2)';
+
+        const gridColor = 'rgba(156, 25, 27, 0.15)';
+        const tickColor = '#ec8385';
+
+        // ==========================================
+        //  CHART 1: PARAMETRIC HEART
+        // ==========================================
+        function generateParametricHeart() {
+            const points = [];
+            const numPoints = 500;
+            for (let i = 0; i <= numPoints; i++) {
+                const t = (2 * Math.PI * i) / numPoints;
+                const x = 16 * Math.pow(Math.sin(t), 3);
+                const y = 13 * Math.cos(t) - 5 * Math.cos(2 * t)
+                          - 2 * Math.cos(3 * t) - Math.cos(4 * t);
+                points.push({ x: x, y: y });
+            }
+            return points;
+        }
+
+        function createGradientLine(ctx, chartArea) {
+            if (!chartArea) return palette[4];
+            const gradient = ctx.createLinearGradient(
+                chartArea.left, chartArea.bottom,
+                chartArea.left, chartArea.top
+            );
+            gradient.addColorStop(0, palette[0]);
+            gradient.addColorStop(0.3, palette[3]);
+            gradient.addColorStop(0.5, palette[5]);
+            gradient.addColorStop(0.7, palette[7]);
+            gradient.addColorStop(1, palette[9]);
+            return gradient;
+        }
+
+        const ctx1 = document.getElementById('chart1').getContext('2d');
+        const heartData = generateParametricHeart();
+
+        const chart1 = new Chart(ctx1, {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: 'Сердце',
+                    data: heartData,
+                    showLine: true,
+                    borderWidth: 3,
+                    borderColor: function(context) {
+                        const chart = context.chart;
+                        const { ctx, chartArea } = chart;
+                        return createGradientLine(ctx, chartArea);
+                    },
+                    pointRadius: 0,
+                    fill: true,
+                    backgroundColor: 'rgba(208, 34, 36, 0.08)',
+                    tension: 0,
+                }]
+            },
+            options: {
+                responsive: true,
+                aspectRatio: 1,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { enabled: false }
+                },
+                scales: {
+                    x: {
+                        min: -20,
+                        max: 20,
+                        grid: { color: gridColor },
+                        ticks: { color: tickColor, font: { size: 11 } },
+                        title: {
+                            display: true,
+                            text: 'x',
+                            color: '#e35053',
+                            font: { size: 14, family: 'Dancing Script' }
+                        }
+                    },
+                    y: {
+                        min: -20,
+                        max: 18,
+                        grid: { color: gridColor },
+                        ticks: { color: tickColor, font: { size: 11 } },
+                        title: {
+                            display: true,
+                            text: 'y',
+                            color: '#e35053',
+                            font: { size: 14, family: 'Dancing Script' }
+                        }
+                    }
+                },
+                animation: {
+                    duration: 2000,
+                    easing: 'easeInOutQuart'
+                }
+            }
+        });
+
+        // ==========================================
+        //  CHART 2: f(x) with slider
+        // ==========================================
+        function generateFxData(a) {
+            const points = [];
+            const numPoints = 1000;
+            const xMin = -Math.sqrt(3.3);
+            const xMax = Math.sqrt(3.3);
+
+            for (let i = 0; i <= numPoints; i++) {
+                const x = xMin + (xMax - xMin) * i / numPoints;
+                const inner = 3.3 - x * x;
+                if (inner < 0) continue;
+
+                const term1 = Math.pow(Math.abs(x), 2 / 3);
+                // Preserve sign for x^(2/3): always positive since exponent is even numerator
+                const term2 = 0.9 * Math.sqrt(inner) * Math.sin(a * Math.PI * x);
+                const y = term1 + term2;
+
+                if (isFinite(y)) {
+                    points.push({ x: parseFloat(x.toFixed(4)), y: parseFloat(y.toFixed(4)) });
+                }
+            }
+            return points;
+        }
+
+        const ctx2 = document.getElementById('chart2').getContext('2d');
+        let currentA = 3;
+
+        const chart2 = new Chart(ctx2, {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: 'f(x)',
+                    data: generateFxData(currentA),
+                    showLine: true,
+                    borderWidth: 3,
+                    borderColor: palette[4],
+                    pointRadius: 0,
+                    fill: true,
+                    backgroundColor: 'rgba(208, 34, 36, 0.06)',
+                    tension: 0.1,
+                }]
+            },
+            options: {
+                responsive: true,
+                aspectRatio: 1,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: 'rgba(26, 10, 10, 0.9)',
+                        borderColor: palette[4],
+                        borderWidth: 1,
+                        titleColor: palette[9],
+                        bodyColor: palette[8],
+                        callbacks: {
+                            label: function(context) {
+                                return `x: ${context.parsed.x.toFixed(2)}, f(x): ${context.parsed.y.toFixed(2)}`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        min: -2.5,
+                        max: 2.5,
+                        grid: { color: gridColor },
+                        ticks: { color: tickColor, font: { size: 11 } },
+                        title: {
+                            display: true,
+                            text: 'x',
+                            color: '#e35053',
+                            font: { size: 14, family: 'Dancing Script' }
+                        }
+                    },
+                    y: {
+                        min: -2,
+                        max: 3,
+                        grid: { color: gridColor },
+                        ticks: { color: tickColor, font: { size: 11 } },
+                        title: {
+                            display: true,
+                            text: 'f(x)',
+                            color: '#e35053',
+                            font: { size: 14, family: 'Dancing Script' }
+                        }
+                    }
+                },
+                animation: {
+                    duration: 300,
+                    easing: 'easeOutQuad'
+                }
+            }
+        });
+
+        // Slider interaction
+        const slider = document.getElementById('sliderA');
+        const sliderValueDisplay = document.getElementById('sliderValue');
+
+        slider.addEventListener('input', function() {
+            currentA = parseFloat(this.value);
+            sliderValueDisplay.textContent = currentA.toFixed(1);
+
+            // Change line color based on slider position
+            const normalizedA = (currentA + 10) / 20; // 0 to 1
+            const colorIndex = Math.floor(normalizedA * (palette.length - 1));
+            const lineColor = palette[Math.min(colorIndex, palette.length - 1)];
+
+            chart2.data.datasets[0].data = generateFxData(currentA);
+            chart2.data.datasets[0].borderColor = lineColor;
+            chart2.update('none');
+        });
+
+        // ==========================================
+        //  CHART 3: POLAR HEART
+        // ==========================================
+        function generatePolarHeart() {
+            const points = [];
+            const numPoints = 800;
+
+            for (let i = 0; i <= numPoints; i++) {
+                const theta = (2 * Math.PI * i) / numPoints;
+                const cosTheta = Math.cos(theta);
+                const sinTheta = Math.sin(theta);
+                const cos2Theta = Math.cos(2 * theta);
+
+                const r = 3.6
+                    - (cos2Theta + 3 * sinTheta) / (0.8 + Math.abs(cosTheta))
+                    + 1.5 * cos2Theta;
+
+                const x = r * cosTheta;
+                const y = r * sinTheta;
+
+                points.push({ x: parseFloat(x.toFixed(4)), y: parseFloat(y.toFixed(4)) });
+            }
+            return points;
+        }
+
+        // Create multi-segment colored datasets for polar plot
+        function createPolarSegments() {
+            const numPoints = 800;
+            const segmentCount = palette.length;
+            const pointsPerSegment = Math.ceil(numPoints / segmentCount);
+            const datasets = [];
+
+            const allPoints = generatePolarHeart();
+
+            for (let s = 0; s < segmentCount; s++) {
+                const start = s * pointsPerSegment;
+                const end = Math.min(start + pointsPerSegment + 1, allPoints.length);
+                const segmentData = allPoints.slice(start, end);
+
+                datasets.push({
+                    label: `Segment ${s}`,
+                    data: segmentData,
+                    showLine: true,
+                    borderWidth: 3,
+                    borderColor: palette[s],
+                    pointRadius: 0,
+                    fill: false,
+                    tension: 0,
+                });
+            }
+
+            return datasets;
+        }
+
+        const ctx3 = document.getElementById('chart3').getContext('2d');
+
+        const chart3 = new Chart(ctx3, {
+            type: 'polarArea',
+            data: {
+                datasets: createPolarSegments()
+            },
+            options: {
+                responsive: true,
+                aspectRatio: 1,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { enabled: false }
+                },
+                scales: {
+                    x: {
+                        min: -7,
+                        max: 7,
+                        grid: { color: gridColor },
+                        ticks: { color: tickColor, font: { size: 11 } },
+                        title: {
+                            display: true,
+                            text: 'x',
+                            color: '#e35053',
+                            font: { size: 14, family: 'Dancing Script' }
+                        }
+                    },
+                    y: {
+                        min: -5,
+                        max: 9,
+                        grid: { color: gridColor },
+                        ticks: { color: tickColor, font: { size: 11 } },
+                        title: {
+                            display: true,
+                            text: 'y',
+                            color: '#e35053',
+                            font: { size: 14, family: 'Dancing Script' }
+                        }
+                    }
+                },
+                animation: {
+                    duration: 2500,
+                    easing: 'easeInOutQuart'
+                }
+            }
+        });
+
+        // ==========================================
+        //  SPARKLE EFFECT ON CLICK
+        // ==========================================
+        document.addEventListener('click', function(e) {
+            for (let i = 0; i < 6; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = (e.clientX + (Math.random() - 0.5) * 40) + 'px';
+                sparkle.style.top = (e.clientY + (Math.random() - 0.5) * 40) + 'px';
+                sparkle.style.width = (3 + Math.random() * 5) + 'px';
+                sparkle.style.height = sparkle.style.width;
+                sparkle.style.background = palette[Math.floor(Math.random() * palette.length)];
+                sparkle.style.position = 'fixed';
+                sparkle.style.zIndex = '9999';
+                document.body.appendChild(sparkle);
+                setTimeout(() => sparkle.remove(), 1000);
+            }
+        });
+    </script>
+</body>
+</html>
