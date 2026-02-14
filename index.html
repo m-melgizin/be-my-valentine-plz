@@ -7,6 +7,19 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
     <style>
+        @font-face {
+            font-family: 'Apple Color Emoji';
+            src: local('Apple Color Emoji'), local('AppleColorEmoji'), local('apple-color-emoji');
+            src:
+                url('assets/fonts/AppleColorEmoji.ttf') format('truetype'),
+                url('assets/fonts/AppleColorEmoji.svg') format('svg');
+        }
+
+        .emoji {
+            font-family: 'Apple Color Emoji';
+        }
+    </style>
+    <style>
         * {
             margin: 0;
             padding: 0;
@@ -331,14 +344,14 @@
 
     <div class="container">
         <div class="header">
-            <h1>💕 Математика Любви 💕</h1>
+            <h1><span class="emoji">💕</span> Математика Любви <span class="emoji">💕</span></h1>
             <div class="divider"></div>
             <p>Когда формулы говорят о чувствах...</p>
         </div>
 
         <!-- Chart 1: Parametric Heart -->
         <div class="chart-card">
-            <h2>💗 Сердце в параметрической форме</h2>
+            <h2><span class="emoji">💗</span> Сердце в параметрической форме</h2>
             <p class="subtitle">Классическое сердце — красота симметрии</p>
             <div class="formula">
                 x(t) = 16·sin³(t) &nbsp;|&nbsp; y(t) = 13·cos(t) − 5·cos(2t) − 2·cos(3t) − cos(4t) &nbsp;|&nbsp; t ∈ [0, 2π]
@@ -350,7 +363,7 @@
 
         <!-- Chart 2: Implicit Heart with slider -->
         <div class="chart-card">
-            <h2>💗 Сердечная волна</h2>
+            <h2><span class="emoji">💗</span> Сердечная волна</h2>
             <p class="subtitle">Играй со слайдером — смотри, как бьётся сердце</p>
             <div class="formula">
                 f(x) = x^(2/3) + 0.9·(3.3 − x²)^(1/2)·sin(a·π·x) &nbsp;|&nbsp; a ∈ [−10, 10]
@@ -365,20 +378,8 @@
             </div>
         </div>
 
-        <!-- Chart 3: Polar Heart -->
-        <div class="chart-card">
-            <h2>💗 Полярная роза любви</h2>
-            <p class="subtitle">Сердце в полярных координатах</p>
-            <div class="formula">
-                r(θ) = 3.6 − (cos(2θ) + 3·sin(θ)) / (0.8 + |cos(θ)|) + 1.5·cos(2θ) &nbsp;|&nbsp; θ ∈ [0, 2π]
-            </div>
-            <div class="canvas-wrapper">
-                <canvas id="chart3"></canvas>
-            </div>
-        </div>
-
         <div class="footer">
-            <div class="heart-big">💕</div>
+            <div class="heart-big emoji">💕</div>
             <p>С любовью, написано формулами ∞</p>
         </div>
     </div>
@@ -397,10 +398,10 @@
         // ==========================================
         function createFloatingHearts() {
             const container = document.getElementById('heartsBg');
-            const hearts = ['♥', '♡', '❤', '💕', '❣'];
+            const hearts = ['❤️', '💖', '💝', '🧸', '💎', '💌'];
             for (let i = 0; i < 25; i++) {
                 const heart = document.createElement('span');
-                heart.className = 'floating-heart';
+                heart.className = 'floating-heart emoji';
                 heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
                 heart.style.left = Math.random() * 100 + '%';
                 heart.style.fontSize = (12 + Math.random() * 24) + 'px';
@@ -624,107 +625,6 @@
             chart2.data.datasets[0].data = generateFxData(currentA);
             chart2.data.datasets[0].borderColor = lineColor;
             chart2.update('none');
-        });
-
-        // ==========================================
-        //  CHART 3: POLAR HEART
-        // ==========================================
-        function generatePolarHeart() {
-            const points = [];
-            const numPoints = 800;
-
-            for (let i = 0; i <= numPoints; i++) {
-                const theta = (2 * Math.PI * i) / numPoints;
-                const cosTheta = Math.cos(theta);
-                const sinTheta = Math.sin(theta);
-                const cos2Theta = Math.cos(2 * theta);
-
-                const r = 3.6
-                    - (cos2Theta + 3 * sinTheta) / (0.8 + Math.abs(cosTheta))
-                    + 1.5 * cos2Theta;
-
-                const x = r * cosTheta;
-                const y = r * sinTheta;
-
-                points.push({ x: parseFloat(x.toFixed(4)), y: parseFloat(y.toFixed(4)) });
-            }
-            return points;
-        }
-
-        // Create multi-segment colored datasets for polar plot
-        function createPolarSegments() {
-            const numPoints = 800;
-            const segmentCount = palette.length;
-            const pointsPerSegment = Math.ceil(numPoints / segmentCount);
-            const datasets = [];
-
-            const allPoints = generatePolarHeart();
-
-            for (let s = 0; s < segmentCount; s++) {
-                const start = s * pointsPerSegment;
-                const end = Math.min(start + pointsPerSegment + 1, allPoints.length);
-                const segmentData = allPoints.slice(start, end);
-
-                datasets.push({
-                    label: `Segment ${s}`,
-                    data: segmentData,
-                    showLine: true,
-                    borderWidth: 3,
-                    borderColor: palette[s],
-                    pointRadius: 0,
-                    fill: false,
-                    tension: 0,
-                });
-            }
-
-            return datasets;
-        }
-
-        const ctx3 = document.getElementById('chart3').getContext('2d');
-
-        const chart3 = new Chart(ctx3, {
-            type: 'polarArea',
-            data: {
-                datasets: createPolarSegments()
-            },
-            options: {
-                responsive: true,
-                aspectRatio: 1,
-                plugins: {
-                    legend: { display: false },
-                    tooltip: { enabled: false }
-                },
-                scales: {
-                    x: {
-                        min: -7,
-                        max: 7,
-                        grid: { color: gridColor },
-                        ticks: { color: tickColor, font: { size: 11 } },
-                        title: {
-                            display: true,
-                            text: 'x',
-                            color: '#e35053',
-                            font: { size: 14, family: 'Dancing Script' }
-                        }
-                    },
-                    y: {
-                        min: -5,
-                        max: 9,
-                        grid: { color: gridColor },
-                        ticks: { color: tickColor, font: { size: 11 } },
-                        title: {
-                            display: true,
-                            text: 'y',
-                            color: '#e35053',
-                            font: { size: 14, family: 'Dancing Script' }
-                        }
-                    }
-                },
-                animation: {
-                    duration: 2500,
-                    easing: 'easeInOutQuart'
-                }
-            }
         });
 
         // ==========================================
