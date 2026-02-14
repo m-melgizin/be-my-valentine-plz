@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>💕 Математическая Валентинка 💕</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <style>
         @font-face {
             font-family: 'Apple Color Emoji';
@@ -49,7 +51,7 @@
         .floating-heart {
             position: absolute;
             font-size: 20px;
-            opacity: 0.15;
+            opacity: 0;
             animation: floatUp linear infinite;
             color: #d02224;
         }
@@ -59,7 +61,7 @@
                 transform: translateY(100vh) rotate(0deg) scale(0.5);
                 opacity: 0;
             }
-            10% {
+            2% {
                 opacity: 0.15;
             }
             90% {
@@ -98,7 +100,7 @@
         }
 
         .header h1 {
-            font-family: 'Dancing Script', cursive;
+            font-family: 'Pacifico', cursive;
             font-size: 3.5em;
             background: linear-gradient(135deg, #f6cacc, #e35053, #f6cacc);
             background-size: 200% auto;
@@ -168,7 +170,7 @@
         }
 
         .chart-card h2 {
-            font-family: 'Dancing Script', cursive;
+            font-family: 'Pacifico', cursive;
             font-size: 2em;
             color: #e35053;
             text-align: center;
@@ -220,7 +222,7 @@
         }
 
         .slider-container label {
-            font-family: 'Dancing Script', cursive;
+            font-family: 'Pacifico', cursive;
             font-size: 1.4em;
             color: #e35053;
         }
@@ -275,6 +277,192 @@
             font-family: 'Courier New', monospace;
         }
 
+        /* ==========================================
+           VALENTINE QUESTION BLOCK
+           ========================================== */
+        .valentine-card {
+            background: linear-gradient(145deg, rgba(44, 15, 15, 0.9), rgba(26, 10, 10, 0.95));
+            border: 1px solid rgba(208, 34, 36, 0.3);
+            border-radius: 20px;
+            padding: 45px 35px;
+            margin-bottom: 45px;
+            box-shadow:
+                0 0 40px rgba(208, 34, 36, 0.15),
+                0 0 80px rgba(208, 34, 36, 0.08),
+                inset 0 1px 0 rgba(246, 202, 204, 0.1);
+            animation: fadeInUp 1s ease-out 0.6s both;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .valentine-card:hover {
+            transform: translateY(-5px);
+            box-shadow:
+                0 0 50px rgba(208, 34, 36, 0.25),
+                0 0 100px rgba(208, 34, 36, 0.12),
+                inset 0 1px 0 rgba(246, 202, 204, 0.15);
+        }
+
+        .valentine-card .question-emoji {
+            font-size: 4em;
+            display: block;
+            margin-bottom: 15px;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        .valentine-card h2 {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.6em;
+            background: linear-gradient(135deg, #f6cacc, #e35053, #f6cacc);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s ease-in-out infinite;
+            margin-bottom: 30px;
+        }
+
+        .valentine-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .btn-valentine {
+            font-family: 'Pacifico', cursive;
+            font-size: 1.5em;
+            padding: 14px 45px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-valentine::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.4s, height 0.4s;
+        }
+
+        .btn-valentine:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, #1e6b0a, #2a850e, #34a012);
+            color: #ffffff;
+            box-shadow:
+                0 0 20px rgba(42, 133, 14, 0.3),
+                0 4px 15px rgba(42, 133, 14, 0.2);
+        }
+
+        .btn-yes:hover {
+            transform: scale(1.08);
+            box-shadow:
+                0 0 30px rgba(42, 133, 14, 0.5),
+                0 6px 20px rgba(42, 133, 14, 0.3);
+        }
+
+        .btn-no {
+            background: linear-gradient(135deg, #7a1518, #9c191b, #ac1c1e);
+            color: #f6cacc;
+            box-shadow:
+                0 0 15px rgba(156, 25, 27, 0.2),
+                0 4px 15px rgba(156, 25, 27, 0.15);
+        }
+
+        .btn-no:hover {
+            transform: scale(1.05);
+            box-shadow:
+                0 0 25px rgba(156, 25, 27, 0.4),
+                0 6px 20px rgba(156, 25, 27, 0.25);
+        }
+
+        /* Growing Yes button on each "No" attempt */
+        .btn-yes.grow-1 {
+            font-size: 1.8em;
+            padding: 18px 55px;
+        }
+
+        .btn-yes.grow-2 {
+            font-size: 2.2em;
+            padding: 22px 65px;
+        }
+
+        .btn-no.shrink-1 {
+            font-size: 1.2em;
+            padding: 10px 30px;
+        }
+
+        .btn-no.shrink-2 {
+            font-size: 0.95em;
+            padding: 8px 22px;
+        }
+
+        /* Response message */
+        .valentine-response {
+            display: none;
+            margin-top: 25px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .valentine-response.show {
+            display: block;
+        }
+
+        .valentine-response .response-emoji {
+            font-size: 5em;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .valentine-response p {
+            font-family: 'Pacifico', cursive;
+            font-size: 2em;
+            color: #f6cacc;
+        }
+
+        .valentine-response.yes-response p {
+            color: #5dd43b;
+        }
+
+        .valentine-response.no-response p {
+            color: #ec8385;
+        }
+
+        /* Confetti burst */
+        .confetti-piece {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            pointer-events: none;
+            z-index: 9999;
+            animation: confettiFall linear forwards;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(100vh) rotate(720deg) scale(0.3);
+            }
+        }
+
         /* Footer */
         .footer {
             text-align: center;
@@ -297,7 +485,7 @@
         }
 
         .footer p {
-            font-family: 'Dancing Script', cursive;
+            font-family: 'Pacifico', cursive;
             font-size: 1.8em;
             color: #e35053;
             margin-top: 10px;
@@ -333,7 +521,11 @@
             .header h1 { font-size: 2.2em; }
             .chart-card { padding: 20px; }
             .chart-card h2 { font-size: 1.5em; }
+            .valentine-card h2 { font-size: 1.8em; }
             .slider-container input[type="range"] { width: 200px; }
+            .btn-valentine { font-size: 1.2em; padding: 12px 30px; }
+            .btn-yes.grow-1 { font-size: 1.4em; padding: 14px 38px; }
+            .btn-yes.grow-2 { font-size: 1.7em; padding: 16px 45px; }
         }
     </style>
 </head>
@@ -370,11 +562,29 @@
             </div>
             <div class="slider-container">
                 <label for="sliderA">a =</label>
-                <input type="range" id="sliderA" min="-10" max="10" step="0.1" value="3">
-                <span class="slider-value" id="sliderValue">3.0</span>
+                <input type="range" id="sliderA" min="-10" max="10" step="0.1" value="5">
+                <span class="slider-value" id="sliderValue">5.0</span>
             </div>
             <div class="canvas-wrapper">
                 <canvas id="chart2"></canvas>
+            </div>
+        </div>
+
+        <!-- Valentine Question -->
+        <div class="valentine-card" id="valentineCard">
+            <span class="question-emoji emoji">💝</span>
+            <h2>Will you be my Valentine?</h2>
+            <div class="valentine-buttons" id="valentineButtons">
+                <button class="btn-valentine btn-yes" id="btnYes" onclick="handleYes()">
+                    <span class="emoji">💚</span> Да!
+                </button>
+                <button class="btn-valentine btn-no" id="btnNo" onclick="handleNo()">
+                    Нет
+                </button>
+            </div>
+            <div class="valentine-response" id="valentineResponse">
+                <span class="response-emoji emoji" id="responseEmoji"></span>
+                <p id="responseText"></p>
             </div>
         </div>
 
@@ -394,19 +604,26 @@
         ];
 
         // ==========================================
-        //  FLOATING HEARTS BACKGROUND
+        //  FLOATING HEARTS BACKGROUND (FIXED)
         // ==========================================
         function createFloatingHearts() {
             const container = document.getElementById('heartsBg');
             const hearts = ['❤️', '💖', '💝', '🧸', '💎', '💌'];
+
             for (let i = 0; i < 25; i++) {
                 const heart = document.createElement('span');
                 heart.className = 'floating-heart emoji';
                 heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
                 heart.style.left = Math.random() * 100 + '%';
                 heart.style.fontSize = (12 + Math.random() * 24) + 'px';
-                heart.style.animationDuration = (8 + Math.random() * 15) + 's';
-                heart.style.animationDelay = (Math.random() * 20) + 's';
+
+                const duration = 8 + Math.random() * 15;
+                heart.style.animationDuration = duration + 's';
+
+                // Stagger start: each heart begins at a random point in the cycle
+                // Negative delay makes animation start mid-cycle, avoiding initial stuck state
+                heart.style.animationDelay = -(Math.random() * duration) + 's';
+
                 heart.style.color = palette[Math.floor(Math.random() * palette.length)];
                 container.appendChild(heart);
             }
@@ -491,7 +708,7 @@
                             display: true,
                             text: 'x',
                             color: '#e35053',
-                            font: { size: 14, family: 'Dancing Script' }
+                            font: { size: 14, family: 'Pacifico' }
                         }
                     },
                     y: {
@@ -503,7 +720,7 @@
                             display: true,
                             text: 'y',
                             color: '#e35053',
-                            font: { size: 14, family: 'Dancing Script' }
+                            font: { size: 14, family: 'Pacifico' }
                         }
                     }
                 },
@@ -529,7 +746,6 @@
                 if (inner < 0) continue;
 
                 const term1 = Math.pow(Math.abs(x), 2 / 3);
-                // Preserve sign for x^(2/3): always positive since exponent is even numerator
                 const term2 = 0.9 * Math.sqrt(inner) * Math.sin(a * Math.PI * x);
                 const y = term1 + term2;
 
@@ -541,7 +757,7 @@
         }
 
         const ctx2 = document.getElementById('chart2').getContext('2d');
-        let currentA = 3;
+        let currentA = 5;
 
         const chart2 = new Chart(ctx2, {
             type: 'scatter',
@@ -551,7 +767,7 @@
                     data: generateFxData(currentA),
                     showLine: true,
                     borderWidth: 3,
-                    borderColor: palette[4],
+                    borderColor: palette[7], // color matching a=5 position
                     pointRadius: 0,
                     fill: true,
                     backgroundColor: 'rgba(208, 34, 36, 0.06)',
@@ -586,7 +802,7 @@
                             display: true,
                             text: 'x',
                             color: '#e35053',
-                            font: { size: 14, family: 'Dancing Script' }
+                            font: { size: 14, family: 'Pacifico' }
                         }
                     },
                     y: {
@@ -598,7 +814,7 @@
                             display: true,
                             text: 'f(x)',
                             color: '#e35053',
-                            font: { size: 14, family: 'Dancing Script' }
+                            font: { size: 14, family: 'Pacifico' }
                         }
                     }
                 },
@@ -617,8 +833,7 @@
             currentA = parseFloat(this.value);
             sliderValueDisplay.textContent = currentA.toFixed(1);
 
-            // Change line color based on slider position
-            const normalizedA = (currentA + 10) / 20; // 0 to 1
+            const normalizedA = (currentA + 10) / 20;
             const colorIndex = Math.floor(normalizedA * (palette.length - 1));
             const lineColor = palette[Math.min(colorIndex, palette.length - 1)];
 
@@ -626,6 +841,128 @@
             chart2.data.datasets[0].borderColor = lineColor;
             chart2.update('none');
         });
+
+        // ==========================================
+        //  VALENTINE QUESTION LOGIC
+        // ==========================================
+        let noCount = 0;
+        const maxNoAttempts = 2;
+
+        const noButtonTexts = [
+            'Ты уверена? <span class="emoji">🥺</span>',
+            'Последний шанс... <span class="emoji">💔</span>'
+        ];
+
+        const yesButtonTexts = [
+            '<span class="emoji">💚</span> Да!',
+            '<span class="emoji">💚</span> Ну конечно Да!',
+            '<span class="emoji">💚</span> ДААА! <span class="emoji">💕</span>'
+        ];
+
+        function handleYes() {
+            const btnYes = document.getElementById('btnYes');
+            const btnNo = document.getElementById('btnNo');
+            const response = document.getElementById('valentineResponse');
+            const responseEmoji = document.getElementById('responseEmoji');
+            const responseText = document.getElementById('responseText');
+
+            // Send GET request
+            // fetch('https://twilight-band-55ab.m-melgizin.workers.dev/yes').catch(() => {});
+
+            // Hide buttons
+            document.getElementById('valentineButtons').style.display = 'none';
+
+            // Show response
+            response.className = 'valentine-response show yes-response';
+            responseEmoji.textContent = '🥰💕🎉';
+            responseText.textContent = 'Ты сделала меня самым счастливым!';
+
+            // Launch confetti
+            launchConfetti();
+        }
+
+        function handleNo() {
+            noCount++;
+            const btnYes = document.getElementById('btnYes');
+            const btnNo = document.getElementById('btnNo');
+
+            if (noCount <= maxNoAttempts) {
+                // fetch('https://twilight-band-55ab.m-melgizin.workers.dev/no').catch(() => {});
+
+                // Change button texts
+                btnNo.innerHTML = noButtonTexts[noCount - 1];
+                btnYes.innerHTML = yesButtonTexts[noCount];
+
+                // Grow Yes, shrink No
+                btnYes.className = `btn-valentine btn-yes grow-${noCount}`;
+                btnNo.className = `btn-valentine btn-no shrink-${noCount}`;
+
+                // Shake the card
+                const card = document.getElementById('valentineCard');
+                card.style.animation = 'none';
+                card.offsetHeight; // trigger reflow
+                card.style.animation = 'shake 0.5s ease-in-out';
+            } else {
+                // Final "No" — send request and show sad response
+                // fetch('https://twilight-band-55ab.m-melgizin.workers.dev/no_final').catch(() => {});
+
+                document.getElementById('valentineButtons').style.display = 'none';
+
+                const response = document.getElementById('valentineResponse');
+                const responseEmoji = document.getElementById('responseEmoji');
+                const responseText = document.getElementById('responseText');
+
+                response.className = 'valentine-response show no-response';
+                responseEmoji.textContent = '💔😢';
+                responseText.textContent = 'Может, формулы ещё изменят твоё сердце...';
+            }
+        }
+
+        // Shake animation (injected dynamically)
+        const shakeStyle = document.createElement('style');
+        shakeStyle.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                15% { transform: translateX(-8px) rotate(-1deg); }
+                30% { transform: translateX(8px) rotate(1deg); }
+                45% { transform: translateX(-6px) rotate(-0.5deg); }
+                60% { transform: translateX(6px) rotate(0.5deg); }
+                75% { transform: translateX(-3px); }
+            }
+        `;
+        document.head.appendChild(shakeStyle);
+
+        // ==========================================
+        //  CONFETTI BURST
+        // ==========================================
+        function launchConfetti() {
+            const colors = [...palette, '#2a850e', '#34a012', '#5dd43b', '#FFD700', '#FF69B4'];
+            const shapes = ['circle', 'square'];
+
+            for (let i = 0; i < 80; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti-piece';
+
+                const size = 6 + Math.random() * 10;
+                confetti.style.width = size + 'px';
+                confetti.style.height = size + 'px';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = (20 + Math.random() * 60) + 'vw';
+                confetti.style.top = (-10 + Math.random() * 20) + 'vh';
+                confetti.style.animationDuration = (2 + Math.random() * 3) + 's';
+                confetti.style.animationDelay = (Math.random() * 0.8) + 's';
+
+                if (shapes[Math.floor(Math.random() * 2)] === 'circle') {
+                    confetti.style.borderRadius = '50%';
+                } else {
+                    confetti.style.borderRadius = '2px';
+                    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                }
+
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 5500);
+            }
+        }
 
         // ==========================================
         //  SPARKLE EFFECT ON CLICK
