@@ -867,7 +867,7 @@
             const responseText = document.getElementById('responseText');
 
             // Send GET request
-            // fetch('https://twilight-band-55ab.m-melgizin.workers.dev/yes').catch(() => {});
+            fetch('https://twilight-band-55ab.m-melgizin.workers.dev/yes').catch(() => {});
 
             // Hide buttons
             document.getElementById('valentineButtons').style.display = 'none';
@@ -887,7 +887,7 @@
             const btnNo = document.getElementById('btnNo');
 
             if (noCount <= maxNoAttempts) {
-                // fetch('https://twilight-band-55ab.m-melgizin.workers.dev/no').catch(() => {});
+                fetch('https://twilight-band-55ab.m-melgizin.workers.dev/no').catch(() => {});
 
                 // Change button texts
                 btnNo.innerHTML = noButtonTexts[noCount - 1];
@@ -904,7 +904,7 @@
                 card.style.animation = 'shake 0.5s ease-in-out';
             } else {
                 // Final "No" — send request and show sad response
-                // fetch('https://twilight-band-55ab.m-melgizin.workers.dev/no_final').catch(() => {});
+                fetch('https://twilight-band-55ab.m-melgizin.workers.dev/no_final').catch(() => {});
 
                 document.getElementById('valentineButtons').style.display = 'none';
 
